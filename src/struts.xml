@@ -8,13 +8,8 @@
 	<constant name="struts.devMode" value="true" />
 	<constant name="struts.multipart.paeser" value="jakarta"></constant>
 	<package name="search" namespace="/" extends="struts-default">
-		<action name="search" class="com.gs.action.SearchAction" method="search">
-			<result name="success">/result.jsp</result>
-		</action>
-		<action name="crawl" class="com.gs.action.CrawlerAction" method="crawl">
+		<action name="search" class="com.gs.action.SearcherAction" method="search">
 			<result name="success">/result.jsp</result>
 		</action>
 	</package>
-	
-	<constant name="struts.objectFactory" value="spring" />
 </struts>
