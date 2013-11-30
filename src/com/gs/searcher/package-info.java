@@ -5,4 +5,4 @@
  * @author GS
  *
  */
-package com.gs.Searcher;
+package com.gs.searcher;
