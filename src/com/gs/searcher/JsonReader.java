@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.CharBuffer;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +17,7 @@ import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.gs.crawler.PagePOJO;
+import com.gs.searcher.PagePOJO;
 
 
 /**
@@ -32,12 +31,13 @@ public class JsonReader implements Closeable{
 	private long flag = 0;
 	private File file;
 	/**
-	 * 用commons IO包里面的ReadLines方法实现，当问价过大的时候内存会溢出�?
-	 * 将这个文件里的所有json格式的内容制成PagePOJO格式，然后封装在LinkedList中返回�? 
+	 * 用commons IO包里面的ReadLines方法实现，当问价过大的时候内存会溢出
+	 * 将这个文件里的所有json格式的内容制成PagePOJO格式，然后封装在LinkedList中返回
 	 * @param path
 	 * @return
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unchecked")
 	public static LinkedList<PagePOJO> readFileToPOJOs(String path) throws IOException {
 		List<String> list = null;
 		try {
@@ -55,7 +55,7 @@ public class JsonReader implements Closeable{
 	}
 	
 	/**
-	 * 读出指定偏移量的�?��PagePOJO
+	 * 读出指定偏移量的PagePOJO
 	 * @param file 
 	 * @param startoffset
 	 * @return
@@ -79,7 +79,7 @@ public class JsonReader implements Closeable{
 			 byte[] b2 = new byte[i];
              int j = 0;
              for (j = 0; j < i; j++) {
-                     b2[j] = b1[j];// 抹掉b1后边�?
+                     b2[j] = b1[j];// 抹掉b1后边空格
              }
 			json = '{'+new String(b2)+'}';
 		} catch (IOException e) {
@@ -96,7 +96,7 @@ public class JsonReader implements Closeable{
 	}
 	
 	/**
-	 * 从FileinputStream指定好的位置读取�?��PagePOJO
+	 * 从FileinputStream指定好的位置读取PagePOJO
 	 * @param fis
 	 * @return
 	 * @throws IOException 
@@ -145,7 +145,7 @@ public class JsonReader implements Closeable{
           try {
                   byte[] b1 = new byte[99999];// Buffer
                   byte b = 0;
-                  if (flag == 0) {//补上因为判断文件是否到头而错过的�?
+                  if (flag == 0) {//补上因为判断文件是否到头而错过的�?
                           b1[0] = '{';
                           i=1;
                   }else{
@@ -153,13 +153,13 @@ public class JsonReader implements Closeable{
                   }
                   for (; b != '}'&& b != -1; i++) {
                           b = (byte) fis.read();
-                          if(b == '\n') {i = i-1;continue;} //第二次开始每次都有一个换行符，丢弃�?
+                          if(b == '\n') {i = i-1;continue;} //第二次开始每次都有一个换行符，丢弃�?
                           b1[i] = b;
                   }
                   byte[] b2 = new byte[i];
                   int j = 0;
                   for (j = 0; j < i; j++) {
-                          b2[j] = b1[j];// 抹掉b1后边�?
+                          b2[j] = b1[j];// 抹掉b1后边�?
                   }
                   json = new String(b2);
           } catch (IOException e) {
@@ -185,7 +185,7 @@ public class JsonReader implements Closeable{
 	}
 
 	/**
-	 * 调用next方法之前�?��查询是否还有下一个Json内容
+	 * 调用next方法之前,查询是否还有下一个Json内容
 	 * @return
 	 * @throws IOException
 	 */

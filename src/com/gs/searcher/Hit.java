@@ -1,6 +1,6 @@
 package com.gs.searcher;
 
-import com.gs.crawler.PagePOJO;
+import com.gs.searcher.PagePOJO;
 
 public class Hit {
         public Hit(PagePOJO pagePOJO, long startOffset,String filename) {
